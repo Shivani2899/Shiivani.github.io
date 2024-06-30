@@ -1,0 +1,168 @@
+<div class="container">
+  <div class="card shadow">
+    <div class="card-body">
+      <h1 class="card-title text-center">MSEDCL Electricity Bill</h1>
+      <form (ngSubmit)="calculateBill()" #billForm="ngForm">
+        <div class="form-group">
+          <label for="flatHolderName">Flat Holder Name:</label>
+          <input
+            type="text"
+            id="flatHolderName"
+            class="form-control"
+            required
+            name="flatHolderName"
+            [(ngModel)]="flatHolderName"
+          />
+        </div>
+        <div class="form-group">
+          <label for="consumerAddress">Consumer Address:</label>
+          <input
+            type="text"
+            id="consumerAddress"
+            class="form-control"
+            required
+            name="consumerAddress"
+            [(ngModel)]="consumerAddress"
+          />
+        </div>
+        <div class="form-group">
+          <label for="pastReading">Past Meter Unit:</label>
+          <input
+            type="number"
+            id="pastReading"
+            class="form-control"
+            required
+            name="meterUnit"
+            [(ngModel)]="pastMeterUnit"
+          />
+        </div>
+        <div class="form-group">
+          <label for="currentReading">Current Meter Unit:</label>
+          <input
+            type="number"
+            id="currentReading"
+            class="form-control"
+            required
+            name="meterUnit"
+            [(ngModel)]="currentMeterUnit"
+          />
+        </div>
+        <div class="form-group">
+          <label for="meterUnit">Meter Unit:</label>
+          <input
+            type="number"
+            id="meterUnit"
+            class="form-control"
+            required
+            name="meterUnit"
+            [(ngModel)]="meterUnit"
+          />
+        </div>
+        <div class="form-group">
+          <label for="propertyType">Property Type:</label>
+          <select
+            id="propertyType"
+            class="form-control"
+            required
+            name="propertyType"
+            [(ngModel)]="propertyType"
+          >
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="propertyType">Phase:</label>
+          <select
+            id="phase"
+            class="form-control"
+            required
+            name="phase"
+            [(ngModel)]="phase"
+          >
+            <option value="One">Phase I</option>
+            <option value="Three">Phase III</option>
+          </select>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary" [disabled]="!billForm.form.valid">
+            Calculate Bill
+          </button>
+        </div>
+      </form>
+      <div *ngIf="totalBill !== null" class="output mt-4" id="billReport">
+        <h2 class="text-center">MSEDCL Electricity Bill</h2>
+        <div class="row">
+          <div class="col-md-6">
+        <div class="bill-section">
+          <h3>Customer Information</h3>
+          <table class="table">
+            <tr>
+              <td><strong>Flat Holder Name:</strong></td>
+              <td>{{ flatHolderName }}</td>
+            </tr>
+            <tr>
+              <td><strong>Consumer Address:</strong></td>
+              <td>{{ consumerAddress }}</td>
+            </tr>
+          </table>
+        </div>
+            <div class="col-md-6">
+        <div class="bill-section">
+          <h3>Meter Reading</h3>
+          <table class="table">
+            <tr>
+              <td><strong>Meter Unit:</strong></td>
+              <td>{{ meterUnit }}</td>
+            </tr>
+          </table>
+        </div>
+              <div class="bill-section mt-4">
+          <h3>Bill Details</h3>
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th>Description</th>
+              <th>Amount (₹)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Meter Charges (विज आकार)</td>
+              <td>{{ meterCharges | currency:'INR' }}</td>
+            </tr>
+            <tr>
+              <td>Fixed Charges (स्थिर आकार)</td>
+              <td>{{ fixedCharges | currency:'INR' }}</td>
+            </tr>
+            <tr>
+              <td>Wheeling Charges (वाहन आकार)</td>
+              <td>{{ wheelingCharges | currency:'INR' }}</td>
+            </tr>
+            <tr>
+              <td>Additional Charges (इंधन समायोजन आकार)</td>
+              <td>{{ additionalCharges | currency:'INR' }}</td>
+            </tr>
+            <tr>
+              <td>Electricity Duty (विज शुल्क)</td>
+              <td>{{ electricityDuty | currency:'INR' }}</td>
+            </tr>
+            <tr>
+              <td><strong>Total Bill</strong></td>
+              <td><strong>{{ totalBill | currency:'INR ' }}</strong></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="text-center">
+      <button *ngIf="totalBill !== null" class="btn btn-success btn-block mt-3" (click)="generatePDF()">
+        Save as PDF
+      </button>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
